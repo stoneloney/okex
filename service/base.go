@@ -26,7 +26,7 @@ func (ok *Okex) SendGetReq(uri string) ([]byte, error) {
 	}
 
 	client := httplib.Get(ok.getApiUrl(uri))
-	client.Header("OK-ACCESS-TIMESTAMP", strconv.FormatInt(time.Now().Unix(),10))
+	client.Header("OK-ACCESS-TIMESTAMP", timestamp)
 	client.Header("OK-ACCESS-KEY", define.ApiKey)
 	client.Header("OK-ACCESS-PASSPHRASE", define.Passphrase)
 	client.Header("OK-ACCESS-SIGN", sign)
