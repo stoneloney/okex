@@ -19,7 +19,7 @@ func (ok *Okex) SendPostReq() {
 }
 
 func (ok *Okex) SendGetReq(uri string) ([]byte, error) {
-	timestamp := strconv.FormatInt(time.Now().Unix(),10)
+	timestamp := strconv.FormatInt(time.Now().UnixNano(),10)
 	sign, err := ok.getSign(timestamp, "GET", uri, "")
 	if err != nil {
 		return nil, err
