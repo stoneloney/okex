@@ -15,7 +15,7 @@ func (a *AccountSvr) GetWallet() {
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
-		fmt.Println(res)
+		fmt.Println(string(res))
 	}
 }
 
