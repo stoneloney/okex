@@ -25,7 +25,11 @@ func (ok *Okex) SendGetReq(uri string) ([]byte, error) {
 		return nil, err
 	}
 
-	client := httplib.Get(ok.getApiUrl(uri))
+	fmt.Println(uri)
+	apiUrl := ok.getApiUrl(uri)
+	fmt.Println(apiUrl)
+
+	client := httplib.Get(apiUrl)
 	client.Header("OK-ACCESS-TIMESTAMP", timestamp)
 	client.Header("OK-ACCESS-KEY", define.ApiKey)
 	client.Header("OK-ACCESS-PASSPHRASE", define.Passphrase)
@@ -47,7 +51,6 @@ func (ok *Okex) SendGetReq(uri string) ([]byte, error) {
 }
 
 func (ok *Okex) getApiUrl(uri string) string {
-
 	return define.ApiHttpHost + uri
 }
 
