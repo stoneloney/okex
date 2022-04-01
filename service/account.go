@@ -3,7 +3,7 @@ package service
 import "fmt"
 
 const (
-	AccountBaseApi = "/api/account/v5"
+	AccountBaseApi = "/api/account/v1"
 )
 
 type AccountSvr struct {
