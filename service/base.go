@@ -6,7 +6,6 @@ import (
 	"okex/define"
 	"okex/helper"
 	"okex/lib/httplib"
-	"strconv"
 	"time"
 )
 
@@ -19,7 +18,8 @@ func (ok *Okex) SendPostReq() {
 }
 
 func (ok *Okex) SendGetReq(uri string) ([]byte, error) {
-	timestamp := strconv.FormatInt(time.Now().UnixNano(),10)
+	//timestamp := strconv.FormatInt(time.Now().UnixNano(),10)
+	timestamp := helper.IsoTime()
 	sign, err := ok.getSign(timestamp, "GET", uri, "")
 	if err != nil {
 		return nil, err
@@ -47,6 +47,7 @@ func (ok *Okex) SendGetReq(uri string) ([]byte, error) {
 }
 
 func (ok *Okex) getApiUrl(uri string) string {
+
 	return define.ApiHttpHost + uri
 }
 
