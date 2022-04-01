@@ -11,7 +11,10 @@ func Load(g *gin.Engine) *gin.Engine {
 
 	r := g.Group("/okex/")
 	{
-		r.GET("/account/wallet", api.AccountWalletHttp)
+		// 资金账户信息 v3
+		r.GET("/account/v3/wallet", api.AccountWalletHttp)
+		// 查看账户余额 v5
+		r.GET("/account/v5/balance", api.AccountBalanceHttp)
 		r.GET("/test", api.TestHttp)
 	}
 
