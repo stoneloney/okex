@@ -16,5 +16,5 @@ type AccountBalanceApi struct {
 
 func (a *AccountBalanceApi) ProcessHttp() {
 	ccy := a.ctx.DefaultQuery("ccy", "")
-	new(service.AccountSvr).GetBalance(ccy)
+	new(service.AccountSvr).GetBalance([]string{ccy})
 }
