@@ -1,27 +1,24 @@
 package service
 
-import "fmt"
-
-const (
-	AccountBaseApi = "/api/account"
+import (
+	"fmt"
+	"strings"
 )
 
 type AccountSvr struct {
 	Okex
 }
 
-func (a *AccountSvr) GetWallet() {
-	res, err := a.SendGetReq(AccountBaseApi + "/v3/wallet")
-	if err != nil {
-		fmt.Println(err.Error())
-	} else {
-		fmt.Println(string(res))
+/**
+   查看账号余额
+   @ccy  币种，如 BTC 支持多币种查询（不超过20个），币种之间半角逗号分隔
+ */
+func (a *AccountSvr) GetBalance(ccys []string)  {
+	params := make(map[string]string)
+	if len(ccys) > 0 {
+		params["ccy"] = strings.Join(ccys, ",")
 	}
-}
-
-// 查看账号余额
-func (a *AccountSvr) GetBalance() {
-	res, err := a.SendGetReq("/api/v5/account/balance")
+	res, err := a.SendGetReq("/api/v5/account/balance", params)
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {

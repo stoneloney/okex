@@ -9,12 +9,12 @@ import (
 func Load(g *gin.Engine) *gin.Engine {
 	g.Use(api.Recovery()) // 引用中间件 不会panic防止500错误
 
-	r := g.Group("/okex/")
+	r := g.Group("/okex/")   // v5版本
 	{
-		// 资金账户信息 v3
-		r.GET("/account/v3/wallet", api.AccountWalletHttp)
-		// 查看账户余额 v5
-		r.GET("/account/v5/balance", api.AccountBalanceHttp)
+		// 账户相关
+		r.GET("/account/balance", api.AccountBalanceHttp)   // 查看账户余额
+
+
 		r.GET("/test", api.TestHttp)
 	}
 

@@ -3,6 +3,7 @@ package service
 import (
 	"fmt"
 	"io/ioutil"
+	"net/url"
 	"okex/define"
 	"okex/helper"
 	"okex/lib/httplib"
@@ -17,16 +18,26 @@ func (ok *Okex) SendPostReq() {
 
 }
 
-func (ok *Okex) SendGetReq(uri string) ([]byte, error) {
-	//timestamp := strconv.FormatInt(time.Now().UnixNano(),10)
+func (ok *Okex) SendGetReq(apiuri string, params map[string]string) ([]byte, error) {
+	// 构造请求参数
+	if len(params) > 0 {
+		var uri url.URL
+		query := uri.Query()
+		for k, v := range params {
+			query.Add(k, v)
+		}
+		queryStr := query.Encode()
+		apiuri += "?" + queryStr
+	}
+
 	timestamp := helper.IsoTime()
-	sign, err := ok.getSign(timestamp, "GET", uri, "")
+	sign, err := ok.getSign(timestamp, "GET", apiuri, "")
 	if err != nil {
 		return nil, err
 	}
 
-	fmt.Println(uri)
-	apiUrl := ok.getApiUrl(uri)
+	fmt.Println(apiuri)
+	apiUrl := ok.getApiUrl(apiuri)
 	fmt.Println(apiUrl)
 
 	client := httplib.Get(apiUrl)
