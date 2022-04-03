@@ -17,8 +17,10 @@ type OrderApi struct {
 }
 
 func (a *OrderApi) ProcessHttp() {
-	ccy := a.Ctx.DefaultQuery("ccy", "")
-	res, err := new(service.AccountSvr).GetBalance([]string{ccy})
+	params := map[string]interface{} {
+		"aaa": "1111",
+	}
+	res, err := new(service.TradeSvr).Order(params)
 	if err != nil {
 		a.Response(3001, "", "查询错误", err.Error())
 		return
