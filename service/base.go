@@ -17,7 +17,11 @@ type Okex struct {
 
 func (ok *Okex) SendPostReq(apiUri string, reqData interface{}) ([]byte, error) {
 	timestamp := helper.IsoTime()
-	bodyJson, _ := json.Marshal(reqData)
+	bodyJson, err := json.Marshal(reqData)
+	if err != nil {
+		return nil, err
+	}
+
 	sign, err := ok.getSign(timestamp, "POST", apiUri, string(bodyJson))
 	if err != nil {
 		return nil, err
