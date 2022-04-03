@@ -14,11 +14,46 @@ type Okex struct {
 
 }
 
-func (ok *Okex) SendPostReq() {
+func (ok *Okex) SendPostReq(apiUri string, reqData interface{}) ([]byte, error) {
+	timestamp := helper.IsoTime()
+	sign, err := ok.getSign(timestamp, "POST", apiUri, "")
+	if err != nil {
+		return nil, err
+	}
 
+	fmt.Println(apiUri)
+	apiUrl := ok.getApiUrl(apiUri)
+	fmt.Println(apiUrl)
+
+	client := httplib.Post(apiUrl)
+	client.SetTimeout(2*time.Second, 2*time.Second)
+
+	client.Header("OK-ACCESS-TIMESTAMP", timestamp)
+	client.Header("OK-ACCESS-KEY", define.ApiKey)
+	client.Header("OK-ACCESS-PASSPHRASE", define.Passphrase)
+	client.Header("OK-ACCESS-SIGN", sign)
+	client.SetTimeout(2*time.Second, 2*time.Second)
+
+	_, err = client.JSONBody(reqData)
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := client.Response()
+	if err != nil {
+		return nil, err
+	}
+	defer func() { _ = resp.Body.Close() }()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	return body, nil
 }
 
-func (ok *Okex) SendGetReq(apiuri string, params map[string]string) ([]byte, error) {
+func (ok *Okex) SendGetReq(apiUri string, params map[string]string) ([]byte, error) {
 	// 构造请求参数
 	if len(params) > 0 {
 		var uri url.URL
@@ -27,20 +62,22 @@ func (ok *Okex) SendGetReq(apiuri string, params map[string]string) ([]byte, err
 			query.Add(k, v)
 		}
 		queryStr := query.Encode()
-		apiuri += "?" + queryStr
+		apiUri += "?" + queryStr
 	}
 
 	timestamp := helper.IsoTime()
-	sign, err := ok.getSign(timestamp, "GET", apiuri, "")
+	sign, err := ok.getSign(timestamp, "GET", apiUri, "")
 	if err != nil {
 		return nil, err
 	}
 
-	fmt.Println(apiuri)
-	apiUrl := ok.getApiUrl(apiuri)
+	fmt.Println(apiUri)
+	apiUrl := ok.getApiUrl(apiUri)
 	fmt.Println(apiUrl)
 
 	client := httplib.Get(apiUrl)
+	client.SetTimeout(2*time.Second, 2*time.Second)
+
 	client.Header("OK-ACCESS-TIMESTAMP", timestamp)
 	client.Header("OK-ACCESS-KEY", define.ApiKey)
 	client.Header("OK-ACCESS-PASSPHRASE", define.Passphrase)

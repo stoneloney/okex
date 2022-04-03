@@ -10,15 +10,15 @@ import (
 // ======== APi 基类 ==========
 
 type Base struct {
-	ctx   *gin.Context
+	Ctx *gin.Context
 }
 
 func (a *Base) SetCtx(ctx *gin.Context)  {
-	a.ctx = ctx
+	a.Ctx = ctx
 }
 
-func(a *Base) Response(code int, data interface{}, msg string) {
-	a.ctx.JSON(http.StatusOK, gin.H{"code":code, "data": data, "msg":msg})
+func(a *Base) Response(code int, data interface{}, msg string, errMsg string) {
+	a.Ctx.JSON(http.StatusOK, gin.H{"code": code, "data": data, "msg":msg, "errMsg":errMsg})
 	return
 }
 

@@ -3,6 +3,8 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 	"okex/api"
+	"okex/api/account"
+	"okex/api/trade"
 )
 
 // Load 加载路由
@@ -12,7 +14,11 @@ func Load(g *gin.Engine) *gin.Engine {
 	r := g.Group("/okex/")   // v5版本
 	{
 		// 账户相关
-		r.GET("/account/balance", api.AccountBalanceHttp)   // 查看账户余额
+		r.GET("/account/balance", account.BalanceHttp)          // 账户余额
+		r.GET("/account/positions", account.PositionsHttp)      // 持仓信息
+
+		// 交易
+		r.POST("/trade/order", trade.OrderHttp)                 // 下单
 
 
 		r.GET("/test", api.TestHttp)
