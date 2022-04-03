@@ -1,6 +1,7 @@
 package service
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/url"
@@ -16,7 +17,8 @@ type Okex struct {
 
 func (ok *Okex) SendPostReq(apiUri string, reqData interface{}) ([]byte, error) {
 	timestamp := helper.IsoTime()
-	sign, err := ok.getSign(timestamp, "POST", apiUri, "")
+	bodyJson, _ := json.Marshal(reqData)
+	sign, err := ok.getSign(timestamp, "POST", apiUri, string(bodyJson))
 	if err != nil {
 		return nil, err
 	}
