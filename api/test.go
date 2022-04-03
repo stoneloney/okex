@@ -13,5 +13,5 @@ type TestApi struct {
 }
 
 func (a *TestApi) ProcessHttp() {
-	a.Response(0, "aaaa", "success")
+	a.Response(0, "aaaa", "success", "")
 }
