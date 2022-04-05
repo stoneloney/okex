@@ -1,6 +1,7 @@
 package market
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"okex/api"
 	"okex/model"
@@ -29,6 +30,8 @@ func (a *TickerApi) ProcessHttp() {
 		a.Response(3001, "", "查询错误", err.Error())
 		return
 	}
+
+	fmt.Println("rsp res")
 
 	a.Response(0, res, "success", "")
 }
