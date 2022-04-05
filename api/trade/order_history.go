@@ -27,7 +27,7 @@ type OrderHistoryApi struct {
 */
 
 func (a *OrderHistoryApi) ProcessHttp() {
-	if err := a.Ctx.ShouldBind(a.apiParams); err != nil {
+	if err := a.Ctx.ShouldBind(&a.apiParams); err != nil {
 		a.Response(1001, nil, "参数错误", err.Error())
 		return
 	}
