@@ -101,6 +101,8 @@ func (ok *Okex) SendGetReq(apiUri string, params map[string]string) ([]byte, err
 		return nil, err
 	}
 
+	fmt.Println(string(body))
+
 	return body, nil
 }
 
