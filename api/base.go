@@ -18,6 +18,9 @@ func (a *Base) SetCtx(ctx *gin.Context)  {
 }
 
 func(a *Base) Response(code int, data interface{}, msg string, errMsg string) {
+	if data == nil {
+		data = struct{}{}
+	}
 	a.Ctx.JSON(http.StatusOK, gin.H{"code": code, "data": data, "msg":msg, "errMsg":errMsg})
 	return
 }
