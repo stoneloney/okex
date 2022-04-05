@@ -20,7 +20,7 @@ func Load(g *gin.Engine) *gin.Engine {
 		// 交易
 		r.GET("/trade/order_info", trade.OrderInfoHttp)         // 订单详情
 		r.GET("/trade/orders_pending", trade.OrderPendingHttp)  // 未成交订单
-		r.GET("/trade/orders_history", trade.OrderHistoryHttp)  // 历史订单记录
+		r.POST("/trade/orders_history", trade.OrderHistoryHttp)  // 历史订单记录
 		r.POST("/trade/order", trade.OrderHttp)                 // 下单
 		r.POST("/trade/cancel_order", trade.CancelOrderHttp)    // 撤单
 
