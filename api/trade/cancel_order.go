@@ -3,6 +3,7 @@ package trade
 import (
 	"github.com/gin-gonic/gin"
 	"okex/api"
+	"okex/model"
 	"okex/service"
 )
 
@@ -15,11 +16,7 @@ func CancelOrderHttp(c *gin.Context) {
 type CancelOrderApi struct {
 	api.Base
 
-	apiParams struct {
-		InstId   string  `json:"instId" form:"instId"`
-		OrdId    string  `json:"ordId" form:"ordId"`
-		ClOrdId  string  `json:"clOrdId" form:"clOrdId"`
-	}
+	apiParams model.TradeCancelOrderReq
 }
 
 /**
@@ -30,7 +27,7 @@ type CancelOrderApi struct {
  */
 
 func (a *CancelOrderApi) ProcessHttp() {
-	if err := a.Ctx.ShouldBind(a.apiParams); err != nil {
+	if err := a.Ctx.ShouldBind(&a.apiParams); err != nil {
 		a.Response(1001, nil, "", "")
 		return
 	}

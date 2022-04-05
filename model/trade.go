@@ -1,7 +1,22 @@
 package model
 
-// 下单
+// 下单请求
+type TradeOrderReq struct {
+	InstId     string `json:"instId" form:"instId"`
+	TdMode     string `json:"tdMode" form:"tdMode"`
+	Ccy        string `json:"ccy" form:"ccy"`
+	ClOrdId    string `json:"clOrdId" form:"clOrdId"`
+	Tag        string `json:"tag" form:"tag"`
+	Side       string `json:"side" form:"side"`
+	PosSide    string `json:"posSide" form:"posSide"`
+	OrdType    string `json:"ordType" form:"ordType"`
+	Sz         string `json:"sz" form:"sz"`
+	Px         string `json:"px" form:"px"`
+	ReduceOnly bool   `json:"reduceOnly" form:"reduceOnly"`
+	TgtCcy     bool   `json:"tgtCcy" form:"tgtCcy"`
+}
 
+// 下单结果
 type TradeOrder struct {
 	Code string `json:"code"`
 	Msg  string `json:"msg"`
@@ -14,8 +29,14 @@ type TradeOrder struct {
 	} `json:"data"`
 }
 
-// 取消订单
+// 取消订单请求
+type TradeCancelOrderReq struct {
+	InstId   string  `json:"instId" form:"instId"`
+	OrdId    string  `json:"ordId" form:"ordId"`
+	ClOrdId  string  `json:"clOrdId" form:"clOrdId"`
+}
 
+// 取消订单结果
 type TradeCancelOrder struct {
 	Code string `json:"code"`
 	Msg  string `json:"msg"`
@@ -27,8 +48,14 @@ type TradeCancelOrder struct {
 	} `json:"data"`
 }
 
-// 订单详情结果
+// 订单详情请求
+type TradeOrderInfoReq struct {
+	InstId    string   `json:"instId"`
+	OrdId     string   `json:"ordId"`
+	ClOrdId   string   `json:"clOrdId"`
+}
 
+// 订单详情结果
 type TradeOrderInfo struct {
 	Code string `json:"code"`
 	Msg  string `json:"msg"`

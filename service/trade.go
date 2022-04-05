@@ -15,16 +15,16 @@ type TradeSvr struct {
   订单详情
  */
 
-func (a *TradeSvr) OrderInfo(instId, ordId, clOrdId string) (model.TradeOrderInfo, error) {
+func (a *TradeSvr) OrderInfo(apiParams model.TradeOrderInfoReq) (model.TradeOrderInfo, error) {
 	params := make(map[string]string)
-	if len(instId) > 0 {
-		params["instId"] = instId
+	if len(apiParams.InstId) > 0 {
+		params["instId"] = apiParams.InstId
 	}
-	if len(ordId) > 0 {
-		params["ordId"] = ordId
+	if len(apiParams.OrdId) > 0 {
+		params["ordId"] = apiParams.OrdId
 	}
-	if len(clOrdId) > 0 {
-		params["clOrdId"] = clOrdId
+	if len(apiParams.ClOrdId) > 0 {
+		params["clOrdId"] = apiParams.ClOrdId
 	}
 
 	var res model.TradeOrderInfo

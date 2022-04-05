@@ -27,7 +27,7 @@ type OrderPendingApi struct {
 */
 
 func (a *OrderPendingApi) ProcessHttp() {
-	if err := a.Ctx.ShouldBind(a.apiParams); err != nil {
+	if err := a.Ctx.ShouldBind(&a.apiParams); err != nil {
 		a.Response(1001, nil, "", "")
 		return
 	}
