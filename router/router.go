@@ -26,7 +26,9 @@ func Load(g *gin.Engine) *gin.Engine {
 		r.POST("/trade/cancel_order", trade.CancelOrderHttp)    // 撤单
 
 		// 行情
+		r.POST("/market/ticker", market.TickerHttp)             // 单个产品行情
 		r.POST("/market/tickers", market.TickersHttp)           // 所有产品行情
+
 
 		r.GET("/test", api.TestHttp)
 	}
