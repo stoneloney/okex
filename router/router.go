@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"okex/api"
 	"okex/api/account"
+	"okex/api/market"
 	"okex/api/trade"
 )
 
@@ -24,7 +25,8 @@ func Load(g *gin.Engine) *gin.Engine {
 		r.POST("/trade/order", trade.OrderHttp)                 // 下单
 		r.POST("/trade/cancel_order", trade.CancelOrderHttp)    // 撤单
 
-
+		// 行情
+		r.POST("/market/tickers", market.TickersHttp)           // 所有产品行情
 
 		r.GET("/test", api.TestHttp)
 	}
