@@ -4,16 +4,16 @@ package model
 type TradeOrderReq struct {
 	InstId     string `json:"instId" form:"instId"`
 	TdMode     string `json:"tdMode" form:"tdMode"`
-	Ccy        string `json:"ccy" form:"ccy"`
-	ClOrdId    string `json:"clOrdId" form:"clOrdId"`
-	Tag        string `json:"tag" form:"tag"`
+	Ccy        string `json:"ccy,omitempty" form:"ccy"`
+	ClOrdId    string `json:"clOrdId,omitempty" form:"clOrdId"`
+	Tag        string `json:"tag,omitempty" form:"tag"`
 	Side       string `json:"side" form:"side"`
-	PosSide    string `json:"posSide" form:"posSide"`
+	PosSide    string `json:"posSide,omitempty" form:"posSide"`
 	OrdType    string `json:"ordType" form:"ordType"`
 	Sz         string `json:"sz" form:"sz"`
-	Px         string `json:"px" form:"px"`
-	ReduceOnly bool   `json:"reduceOnly" form:"reduceOnly"`
-	TgtCcy     bool   `json:"tgtCcy" form:"tgtCcy"`
+	Px         string `json:"px,omitempty" form:"px"`
+	ReduceOnly bool   `json:"reduceOnly,omitempty" form:"reduceOnly"`
+	TgtCcy     bool   `json:"tgtCcy,omitempty" form:"tgtCcy"`
 }
 
 // 下单结果
