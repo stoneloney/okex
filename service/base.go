@@ -28,7 +28,7 @@ func (ok *Okex) SendPostReq(apiUri string, reqData interface{}) ([]byte, error) 
 	}
 
 	fmt.Println(apiUri)
-	fmt.Println(bodyJson)
+	fmt.Println(string(bodyJson))
 	apiUrl := ok.getApiUrl(apiUri)
 	fmt.Println(apiUrl)
 
