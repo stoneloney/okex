@@ -28,3 +28,12 @@ func IsoTime() string {
 	return iso
 }
 
+func InArray(val string, arr []string) bool {
+	for _, v := range arr {
+		if v == val {
+			return true
+		}
+	}
+	return false
+}
+

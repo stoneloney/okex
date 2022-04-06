@@ -31,9 +31,9 @@ type TradeOrder struct {
 
 // 取消订单请求
 type TradeCancelOrderReq struct {
-	InstId   string  `json:"instId" form:"instId"`
-	OrdId    string  `json:"ordId" form:"ordId"`
-	ClOrdId  string  `json:"clOrdId" form:"clOrdId"`
+	InstId  string `json:"instId" form:"instId"`
+	OrdId   string `json:"ordId" form:"ordId"`
+	ClOrdId string `json:"clOrdId" form:"clOrdId"`
 }
 
 // 取消订单结果
@@ -50,9 +50,9 @@ type TradeCancelOrder struct {
 
 // 订单详情请求
 type TradeOrderInfoReq struct {
-	InstId    string   `json:"instId"`
-	OrdId     string   `json:"ordId"`
-	ClOrdId   string   `json:"clOrdId"`
+	InstId  string `json:"instId"`
+	OrdId   string `json:"ordId"`
+	ClOrdId string `json:"clOrdId"`
 }
 
 // 订单详情结果
@@ -100,7 +100,6 @@ type TradeOrderInfo struct {
 }
 
 // 未完成订单请求
-
 type OrdersPendingReq struct {
 	InstType string `json:"instType" form:"instType"`
 	Uly      string `json:"uly" form:"uly"`
@@ -113,7 +112,6 @@ type OrdersPendingReq struct {
 }
 
 // 未完成订单返回
-
 type OrdersPendingRsp struct {
 	Code string `json:"code"`
 	Msg  string `json:"msg"`
@@ -158,7 +156,6 @@ type OrdersPendingRsp struct {
 }
 
 // 完成订单请求
-
 type OrderHistoryReq struct {
 	InstType string `json:"instType" form:"instType"`
 	Uly      string `json:"uly" form:"uly"`
@@ -172,7 +169,6 @@ type OrderHistoryReq struct {
 }
 
 // 完成订单返回
-
 type OrderHistoryRsp struct {
 	Code string `json:"code"`
 	Msg  string `json:"msg"`
@@ -213,5 +209,29 @@ type OrderHistoryRsp struct {
 		Category        string `json:"category"`
 		UTime           string `json:"uTime"`
 		CTime           string `json:"cTime"`
+	} `json:"data"`
+}
+
+// 策略委托请求
+type TradeOrderAlgoReq struct {
+	InstId     string `json:"instId"`
+	TdMode     string `json:"tdMode"`
+	Ccy        string `json:"ccy"`
+	Side       string `json:"side"`
+	PosSide    string `json:"posSide"`
+	OrdType    string `json:"ordType"`
+	Sz         string `json:"sz"`
+	Tag        string `json:"tag"`
+	TgtCcy     string `json:"tgtCcy"`
+	ReduceOnly string `json:"reduceOnly"`
+}
+
+type TradeOrderAlgoRsp struct {
+	Code string `json:"code"`
+	Msg  string `json:"msg"`
+	Data []struct {
+		AlgoID string `json:"algoId"`
+		SCode  string `json:"sCode"`
+		SMsg   string `json:"sMsg"`
 	} `json:"data"`
 }
