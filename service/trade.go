@@ -61,6 +61,9 @@ func (a *TradeSvr) Order(params interface{}) (model.TradeOrder, error) {
 	if err != nil {
 		return res, err
 	}
+
+	fmt.Println(res)
+
 	if res.Code != "0" {
 		return res, errors.New(fmt.Sprintf("code:%s, msg:%s", res.Code, res.Msg))
 	}
