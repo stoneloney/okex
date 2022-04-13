@@ -28,9 +28,6 @@ func (a *AccountSvr) GetBalance(ccys []string) (model.AcccountBlance, error)  {
 		return res, err
 	}
 
-
-	fmt.Println(string(data))
-
 	err = json.Unmarshal(data, &res)
 	if err != nil {
 		return res, err
