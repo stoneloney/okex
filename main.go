@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"okex/api/watch"
+	"okex/api/strategy"
 	"okex/router"
 )
 

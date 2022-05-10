@@ -58,3 +58,20 @@ type TickersRsp struct {
 		Ts        string `json:"ts"`
 	} `json:"data"`
 }
+
+// K线数据请求
+type CandlesReq struct {
+	InstId    string  `json:"instId"`
+	Bar       string  `json:"bar"`
+	After     string  `json:"after"`
+	Before    string  `json:"before"`
+	Limit     string  `json:"limit"`
+}
+
+// K线数据返回
+type CandlesRsp struct {
+	Code    string   `json:"code"`
+	Msg     string   `json:"msg"`
+	Data    [][]string `json:"data"`   // 各时段价格等
+
+}

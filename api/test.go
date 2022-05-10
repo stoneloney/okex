@@ -2,6 +2,7 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
+	"okex/api/strategy"
 )
 
 func TestHttp(c *gin.Context) {
@@ -13,5 +14,5 @@ type TestApi struct {
 }
 
 func (a *TestApi) ProcessHttp() {
-	a.Response(0, "aaaa", "success", "")
+	new(strategy.StrategyOne).Init().Run()
 }
