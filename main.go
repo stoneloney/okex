@@ -11,8 +11,8 @@ func main() {
 	g := gin.Default()
 	router.Load(g)
 
-	// 开一个协程来监控价格变化
-	go watch.WatchUSDT()
+	// 运行策略1
+	go new(strategy.StrategyOne).Run()
 
 	_ = http.ListenAndServe(":14000", g)
 }
