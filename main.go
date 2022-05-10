@@ -12,7 +12,7 @@ func main() {
 	router.Load(g)
 
 	// 运行策略1
-	go new(strategy.StrategyOne).Run()
+	go new(strategy.StrategyOne).Init().Run()
 
 	_ = http.ListenAndServe(":14000", g)
 }
