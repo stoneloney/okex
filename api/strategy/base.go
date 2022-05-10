@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"okex/model"
 	"okex/service"
-	"time"
 )
 
 type Strategy struct {
@@ -78,15 +77,12 @@ func (s *Strategy) SetPercentageDrop(percent int) {
  */
 
 func (s *Strategy) Run() {
-	// 创建定时器
-	ticker := time.NewTicker(time.Second * 2)
-	go func() {
-		for {
-			<-ticker.C
-			s.Do()
-		}
-	}()
+	s.Do()
 }
+
+/**
+ * 操作
+ */
 
 func (s *Strategy) Do() {
 	fmt.Println("do")
