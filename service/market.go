@@ -56,7 +56,7 @@ func (a *MarketSvr) Tickers(apiParams model.TickersReq) (model.TickersRsp, error
 		params["uly"] = apiParams.Uly
 	}
 
-	data, err := a.SendGetReq("/api/v5/market/ticker", params)
+	data, err := a.SendGetReq("/api/v5/market/tickers", params)
 	if err != nil {
 		return res, err
 	}
