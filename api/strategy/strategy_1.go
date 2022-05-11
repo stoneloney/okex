@@ -18,7 +18,7 @@ type StrategyOne struct {
 
 func (s *StrategyOne) Init() *StrategyOne {
 	s.SetCurrency("BTC-USDT")     // 查询BTC
-	s.SetPrice(31338)           // 设置起始价格
+	s.SetPrice(32338)           // 设置起始价格
 	s.SetPercentageIncrease(0.05) // 设置涨幅百分比
 	s.SetPercentageDrop(0.05)     // 设置跌幅百分比
 
