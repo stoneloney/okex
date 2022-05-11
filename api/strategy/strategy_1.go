@@ -17,7 +17,7 @@ type StrategyOne struct {
 
 func (s *StrategyOne) Init() *StrategyOne {
 	s.SetCurrency("BTC-USDT")     // 查询BTC
-	s.SetPrice(30764.2)           // 设置起始价格
+	s.SetPrice(30924)           // 设置起始价格
 	s.SetPercentageIncrease(0.02) // 设置涨幅百分比
 	s.SetPercentageDrop(0.02)     // 设置跌幅百分比
 
@@ -43,7 +43,6 @@ func (s *StrategyOne) Do() {
 		fmt.Println(err.Error())
 		return
 	}
-	fmt.Println(res)
 
 	if res.Code != "0" {
 		fmt.Println(fmt.Sprintf("code is %s, errMsg:%s", res.Code, res.Msg))
