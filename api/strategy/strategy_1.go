@@ -22,6 +22,7 @@ func (s *StrategyOne) Init() *StrategyOne {
 	s.SetPercentageDrop(0.02)     // 设置跌幅百分比
 
 	s.percentage = 0.1 // 每次补减百分比
+	s.totalAmount = 1000000 // 总金额
 
 	return s
 }
@@ -67,12 +68,16 @@ func (s *StrategyOne) Do() {
 
 			// 计算卖出数
 			if s.number <= 0 {
-				fmt.Println(fmt.Sprintf("币数为0, 不能执行减仓操作, number:%d", s.number))
+				fmt.Println(fmt.Sprintf("币数为0, 不能执行减仓操作, number:%v", s.number))
 				return
 			}
 
 			// 卖出数量
 			sellNumber := math.Ceil(s.number * s.percentage)
+			if s.number < sellNumber {
+				sellNumber = s.number
+			}
+
 			// 计算卖出总价
 			sellAmount := sellNumber * lastPriceFloat
 
@@ -88,8 +93,17 @@ func (s *StrategyOne) Do() {
 				lastPriceFloat,
 				s.price))
 
+			if s.totalAmount <= 0 {
+				fmt.Println(fmt.Sprintf("金额0, 不能执行补仓操作, amout:%v", s.totalAmount))
+				return
+			}
+
 			// 计算本次购买使用的金额
 			buyAmount := s.totalAmount * s.percentage
+			if s.totalAmount < buyAmount {
+				buyAmount = s.totalAmount
+			}
+
 			// 计算可购买的数量
 			buyNumber := math.Floor(buyAmount / lastPriceFloat)
 
