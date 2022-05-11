@@ -86,7 +86,7 @@ func (s *StrategyOne) Do() {
 			// 总金额添加
 			s.totalAmount += sellAmount
 
-		} else if contrastPercentage < 0 && contrastPercentage >= s.percentageDrop { // 价格减少,触发补仓策略
+		} else if contrastPercentage < 0 && contrastPercentage <= s.percentageDrop { // 价格减少,触发补仓策略
 			fmt.Println(fmt.Sprintf("补仓, contrastPercentage:%v, percentageIncrease:%v, currentPrice:%v, setPrice:%v",
 				contrastPercentage,
 				s.percentageIncrease,
