@@ -22,7 +22,7 @@ func (s *StrategyOne) Init() *StrategyOne {
 	s.SetPercentageIncrease(0.05) // 设置涨幅百分比
 	s.SetPercentageDrop(0.05)     // 设置跌幅百分比
 
-	s.percentage = 0.1 // 每次补减百分比
+	s.percentage = 0.1 // 每次补减百分比 (10%)
 	s.totalAmount = 1000000 // 总金额
 
 	return s
@@ -57,7 +57,7 @@ func (s *StrategyOne) Do() {
 
 		lastPriceFloat, _ := strconv.ParseFloat(lastPrice, 32)
 		// 执行价格对比
-		contrastPercentage := (lastPriceFloat - s.price) / s.price * 100 // 转为100
+		contrastPercentage := (lastPriceFloat - s.price) / s.price
 
 		if contrastPercentage > 0 && contrastPercentage >= s.percentageIncrease { // 价格增加,触发减仓策略
 			fmt.Println(fmt.Sprintf("减仓, contrastPercentage:%v, percentageIncrease:%v, currentPrice:%v, setPrice:%v",
