@@ -107,6 +107,10 @@ func (s *StrategyOne) Do() {
 			if s.totalAmount < buyAmount {
 				buyAmount = s.totalAmount
 			}
+			if buyAmount < lastPriceFloat {
+				fmt.Println(fmt.Sprintf("补仓金额不足以支付"))
+				return
+			}
 
 			// 计算可购买的数量
 			buyNumber := math.Floor(buyAmount / lastPriceFloat)
