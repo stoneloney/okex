@@ -4,6 +4,7 @@ import (
 	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/base64"
+	"math/big"
 	"time"
 )
 
@@ -35,5 +36,14 @@ func InArray(val string, arr []string) bool {
 		}
 	}
 	return false
+}
+
+/**
+ * float转string
+ */
+func Float64ToString(num float64) string {
+	newNum := big.NewRat(1, 1)
+	newNum.SetFloat64(num)
+	return newNum.FloatString(0)
 }
 

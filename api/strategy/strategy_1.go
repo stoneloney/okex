@@ -3,6 +3,7 @@ package strategy
 import (
 	"fmt"
 	"math"
+	"okex/helper"
 	"strconv"
 	"time"
 )
@@ -117,7 +118,7 @@ func (s *StrategyOne) Do() {
 				lastPriceFloat,
 				s.price,
 				s.number,
-				s.totalAmount))
+				helper.Float64ToString(s.totalAmount)))
 		}
 	}
 
