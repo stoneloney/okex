@@ -27,10 +27,10 @@ func (ok *Okex) SendPostReq(apiUri string, reqData interface{}) ([]byte, error) 
 		return nil, err
 	}
 
-	fmt.Println(apiUri)
-	fmt.Println(string(bodyJson))
+	//fmt.Println(apiUri)
+	//fmt.Println(string(bodyJson))
 	apiUrl := ok.getApiUrl(apiUri)
-	fmt.Println(apiUrl)
+	//fmt.Println(apiUrl)
 
 	client := httplib.Post(apiUrl)
 	client.SetTimeout(2*time.Second, 2*time.Second)
@@ -78,9 +78,9 @@ func (ok *Okex) SendGetReq(apiUri string, params map[string]string) ([]byte, err
 		return nil, err
 	}
 
-	fmt.Println(apiUri)
+	//fmt.Println(apiUri)
 	apiUrl := ok.getApiUrl(apiUri)
-	fmt.Println(apiUrl)
+	//fmt.Println(apiUrl)
 
 	client := httplib.Get(apiUrl)
 	client.SetTimeout(2*time.Second, 2*time.Second)
@@ -102,7 +102,7 @@ func (ok *Okex) SendGetReq(apiUri string, params map[string]string) ([]byte, err
 		return nil, err
 	}
 
-	fmt.Println(string(body))
+	//fmt.Println(string(body))
 
 	return body, nil
 }
