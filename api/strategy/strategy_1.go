@@ -53,19 +53,20 @@ func (s *StrategyOne) Do() {
 		contrastPercentage := (lastPriceFloat - s.price) / s.price * 100   // 转为100
 
 		if contrastPercentage > 0 && contrastPercentage >= s.percentageIncrease {   // 价格增加,触发减仓策略
-			fmt.Println(fmt.Sprintf("contrastPercentage:%v, percentageIncrease:%v, currentPrice:%v, setPrice:%v",
+			fmt.Println(fmt.Sprintf("减仓, contrastPercentage:%v, percentageIncrease:%v, currentPrice:%v, setPrice:%v",
 				contrastPercentage,
 				s.percentageIncrease,
 				lastPriceFloat,
 				s.price))
 		} else if contrastPercentage < 0 && contrastPercentage >= s.percentageDrop {      // 价格减少,触发补仓策略
-			fmt.Println(fmt.Sprintf("contrastPercentage:%v, percentageIncrease:%v, currentPrice:%v, setPrice:%v",
+			fmt.Println(fmt.Sprintf("补仓, contrastPercentage:%v, percentageIncrease:%v, currentPrice:%v, setPrice:%v",
 				contrastPercentage,
 				s.percentageIncrease,
 				lastPriceFloat,
 				s.price))
 		} else {    // 保持监控状态
-			fmt.Println(fmt.Sprintf("currentPrice:%v, setPrice:%v",
+			fmt.Println(fmt.Sprintf("监控, contrastPercentage:%v, currentPrice:%v, setPrice:%v",
+				contrastPercentage,
 				lastPriceFloat,
 				s.price))
 		}
