@@ -28,7 +28,7 @@ func (s *StrategyOne) Init() *StrategyOne {
 }
 func (s *StrategyOne) Run() {
 	// 创建定时器
-	ticker := time.NewTicker(time.Second * 60)
+	ticker := time.NewTicker(time.Second * 20)
 	go func() {
 		for {
 			<-ticker.C
