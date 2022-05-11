@@ -14,7 +14,7 @@ func (s *StrategyOne) Init() *StrategyOne {
 	s.SetCurrency("BTC-USDT")    // 查询BTC
 	s.SetPrice(30764.2)             // 设置起始价格
 	s.SetPercentageIncrease(0.3)   // 设置涨幅百分比
-	s.SetPercentageDrop(1)       // 设置跌幅百分比
+	s.SetPercentageDrop(0.2)       // 设置跌幅百分比
 
 
 	return s
