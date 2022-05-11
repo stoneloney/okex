@@ -86,6 +86,10 @@ func (s *StrategyOne) Do() {
 			// 总金额添加
 			s.totalAmount += sellAmount
 
+			fmt.Println(fmt.Sprintf("减仓后, number:%v, amount:%v",
+				s.number,
+				helper.Float64ToString(s.totalAmount)))
+
 		} else if contrastPercentage < 0 && contrastPercentage <= s.percentageDrop { // 价格减少,触发补仓策略
 			fmt.Println(fmt.Sprintf("补仓, contrastPercentage:%v, percentageIncrease:%v, currentPrice:%v, setPrice:%v",
 				contrastPercentage,
@@ -111,6 +115,10 @@ func (s *StrategyOne) Do() {
 			s.number += buyNumber
 			// 总金额减少
 			s.totalAmount -= buyAmount
+
+			fmt.Println(fmt.Sprintf("补仓后, number:%v, amount:%v",
+				s.number,
+				helper.Float64ToString(s.totalAmount)))
 
 		} else { // 保持监控状态
 			fmt.Println(fmt.Sprintf("监控, contrastPercentage:%v, currentPrice:%v, setPrice:%v, number:%v, amount:%v",
