@@ -7,9 +7,9 @@ import (
 )
 
 type Strategy struct {
-	price              float32 // 设置价格
-	percentageIncrease int // 价格涨幅百分比
-	percentageDrop     int // 价格跌幅百分比
+	price              float64 // 设置价格
+	percentageIncrease float64 // 价格涨幅百分比
+	percentageDrop     float64 // 价格跌幅百分比
 	currency           string   // 币种
 	MarketSvr *service.MarketSvr   // 实例
 }
@@ -31,7 +31,6 @@ func (s *Strategy) GetMarketSvr() *service.MarketSvr {
 
 func (s *Strategy) GetTickerInfo() (model.TickerRsp, error) {
 	params := model.TickerReq {
-		//InstId: "ORS-USDT",
 		InstId: s.currency,
 	}
 
@@ -44,7 +43,7 @@ func (s *Strategy) GetTickerInfo() (model.TickerRsp, error) {
  * 设置价格
  */
 
-func (s *Strategy) SetPrice(price float32) {
+func (s *Strategy) SetPrice(price float64) {
 	s.price = price
 }
 
@@ -60,7 +59,7 @@ func (s *Strategy) SetCurrency(currency string) {
  * 设置涨幅百分比
  */
 
-func (s *Strategy) SetPercentageIncrease(percent int) {
+func (s *Strategy) SetPercentageIncrease(percent float64) {
 	s.percentageIncrease = percent
 }
 
@@ -68,7 +67,7 @@ func (s *Strategy) SetPercentageIncrease(percent int) {
  * 设置跌幅百分比
  */
 
-func (s *Strategy) SetPercentageDrop(percent int) {
+func (s *Strategy) SetPercentageDrop(percent float64) {
 	s.percentageDrop = percent
 }
 
