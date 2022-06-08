@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"okex/helper"
+	"okex/model"
 	"strconv"
 	"time"
 )
@@ -14,15 +15,17 @@ type StrategyOne struct {
 	totalAmount float64 // 投入的总金额
 	number      float64 // 拥有的币数
 	percentage  float64 // 加减仓的百分比 (补仓按价格的百分比，减仓按币数的百分比)
+	lastPrice   float64 // 最新价格
+
 }
 
 func (s *StrategyOne) Init() *StrategyOne {
 	s.SetCurrency("BTC-USDT")     // 查询BTC
-	s.SetPrice(32338)           // 设置起始价格
+	s.SetPrice(32338)             // 设置基准价格
 	s.SetPercentageIncrease(0.02) // 设置涨幅百分比
 	s.SetPercentageDrop(0.02)     // 设置跌幅百分比
 
-	s.percentage = 0.1 // 每次补减百分比 (10%)
+	s.percentage = 0.1      // 每次补减百分比 (10%)
 	s.totalAmount = 1000000 // 总金额
 
 	return s
@@ -90,6 +93,13 @@ func (s *StrategyOne) Do() {
 				s.number,
 				helper.Float64ToString(s.totalAmount)))
 
+			// 记录当前数据 (减仓)
+			err = s.createLog(2)
+			if err != nil {
+				fmt.Println("create log,error:", err.Error())
+			}
+
+
 		} else if contrastPercentage < 0 && contrastPercentage <= -s.percentageDrop { // 价格减少,触发补仓策略
 			fmt.Println(fmt.Sprintf("补仓, contrastPercentage:%v, percentageIncrease:%v, currentPrice:%v, setPrice:%v",
 				contrastPercentage,
@@ -124,6 +134,12 @@ func (s *StrategyOne) Do() {
 				s.number,
 				helper.Float64ToString(s.totalAmount)))
 
+			// 记录当前数据 (补仓)
+			err = s.createLog(1)
+			if err != nil {
+				fmt.Println("create log,error:", err.Error())
+			}
+
 		} else { // 保持监控状态
 			fmt.Println(fmt.Sprintf("监控, contrastPercentage:%v, currentPrice:%v, setPrice:%v, number:%v, amount:%v",
 				contrastPercentage,
@@ -133,5 +149,23 @@ func (s *StrategyOne) Do() {
 				helper.Float64ToString(s.totalAmount)))
 		}
 	}
+}
 
+// 记录每次的价格等信息
+func (s *StrategyOne) createLog(finalType int) error {
+	createData := &model.StrategyLog{
+		Name: "strategy_one",      // 策略名称
+		Number: s.number,          // 当前币数
+		Amount: s.totalAmount,     // 当前剩余金额
+		SetPrice: s.price,         // 设置价格
+		FinalPrice: s.lastPrice,   // 成交价格
+		FinalType: finalType,      // 成交方式 1:加仓 2:减仓
+		FinalDate: helper.TimeNowStr(), // 成交时间
+	}
+
+	result := helper.GetDb().Create(createData)
+	if result.Error != nil {
+		return result.Error
+	}
+	return nil
 }

@@ -29,6 +29,13 @@ func IsoTime() string {
 	return iso
 }
 
+/**
+ * 当前时间
+ */
+func TimeNowStr() string {
+	return time.Now().Format("2006-01-02 15:04:05")
+}
+
 func InArray(val string, arr []string) bool {
 	for _, v := range arr {
 		if v == val {

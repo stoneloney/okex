@@ -7,7 +7,7 @@ import (
 )
 
 type Strategy struct {
-	price              float64 // 设置价格
+	price              float64 // 设置的基准价格
 	percentageIncrease float64 // 价格涨幅百分比
 	percentageDrop     float64 // 价格跌幅百分比
 	currency           string   // 币种
