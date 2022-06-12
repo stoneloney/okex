@@ -84,6 +84,8 @@ func (s *StrategyOne) Do() {
 			// 计算卖出总价
 			sellAmount := sellNumber * lastPriceFloat
 
+			// 最新成交价格
+			s.lastPrice = lastPriceFloat
 			// 总币数减少
 			s.number -= sellNumber
 			// 总金额添加
@@ -125,6 +127,8 @@ func (s *StrategyOne) Do() {
 			// 计算可购买的数量
 			buyNumber := math.Floor(buyAmount / lastPriceFloat)
 
+			// 最新成交价格
+			s.lastPrice = lastPriceFloat
 			// 总币数添加
 			s.number += buyNumber
 			// 总金额减少
