@@ -63,6 +63,7 @@ func (s *StrategyOne) SetLatestParams(data model.StrategyLog) {
 	s.SetPercentageDrop(data.PercentageDrop)         // 设置跌幅百分比
 	s.SetPercentage(data.Percentage)                 // 设置补仓总的金额比
 	s.SetTotalAmount(data.Amount)                    // 设置总金额
+	s.SetNumber(data.Number)                         // 设置总币数
 }
 /**
  * 运行

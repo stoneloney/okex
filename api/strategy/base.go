@@ -77,6 +77,14 @@ func (s *Strategy) SetPercentageDrop(percent float64) {
 }
 
 /**
+ * 设置初始化币数
+ */
+
+func (s *Strategy) SetNumber(number float64) {
+	s.number = number
+}
+
+/**
  * 每次补仓的金额比
  */
 
