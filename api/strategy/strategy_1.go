@@ -46,6 +46,8 @@ func (s *StrategyOne) Init() *StrategyOne {
  */
 
 func (s *StrategyOne) SetDefaultParams() {
+	fmt.Println("start set default")
+
 	s.SetPrice(21403)             // 设置基准价格
 	s.SetPercentageIncrease(0.02) // 设置涨幅百分比
 	s.SetPercentageDrop(0.02)     // 设置跌幅百分比
@@ -58,6 +60,8 @@ func (s *StrategyOne) SetDefaultParams() {
  */
 
 func (s *StrategyOne) SetLatestParams(data model.StrategyLog) {
+	fmt.Println("start set latest")
+
 	s.SetPrice(data.FinalPrice)                      // 设置基准价格
 	s.SetPercentageIncrease(data.PercentageIncrease) // 设置涨幅百分比
 	s.SetPercentageDrop(data.PercentageDrop)         // 设置跌幅百分比
