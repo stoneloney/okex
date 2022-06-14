@@ -65,6 +65,7 @@ func (s *StrategyOne) SetLatestParams(data model.StrategyLog) {
 	s.SetTotalAmount(data.Amount)                    // 设置总金额
 	s.SetNumber(data.Number)                         // 设置总币数
 }
+
 /**
  * 运行
  */
@@ -207,13 +208,16 @@ func (s *StrategyOne) Do() {
 // 记录每次的价格等信息
 func (s *StrategyOne) createLog(finalType int) error {
 	createData := &model.StrategyLog{
-		Name:       "strategy_one",      // 策略名称
-		Number:     s.number,            // 当前币数
-		Amount:     s.totalAmount,       // 当前剩余金额
-		SetPrice:   s.price,             // 设置价格
-		FinalPrice: s.lastPrice,         // 成交价格
-		FinalType:  finalType,           // 成交方式 1:加仓 2:减仓
-		FinalDate:  helper.TimeNowStr(), // 成交时间
+		Name:               "strategy_one",       // 策略名称
+		Number:             s.number,             // 当前币数
+		Amount:             s.totalAmount,        // 当前剩余金额
+		Percentage:         s.percentage,         // 金额百分比
+		PercentageIncrease: s.percentageIncrease, // 补仓百分比
+		PercentageDrop:     s.percentageDrop,     // 减仓百分比
+		SetPrice:           s.price,              // 设置价格
+		FinalPrice:         s.lastPrice,          // 成交价格
+		FinalType:          finalType,            // 成交方式 1:加仓 2:减仓
+		FinalDate:          helper.TimeNowStr(),  // 成交时间
 	}
 
 	result := helper.GetDb().Create(createData)
