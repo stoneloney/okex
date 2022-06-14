@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"okex/api/strategy"
@@ -12,7 +13,12 @@ func main() {
 	router.Load(g)
 
 	// 运行策略1
-	go new(strategy.StrategyOne).Init().Run()
+	go func() {
+		err := new(strategy.StrategyOne).Init().Run()
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+	}()
 
 	_ = http.ListenAndServe(":14000", g)
 }

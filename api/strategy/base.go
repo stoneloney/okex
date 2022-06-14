@@ -7,10 +7,15 @@ import (
 )
 
 type Strategy struct {
-	price              float64 // 设置的基准价格
-	percentageIncrease float64 // 价格涨幅百分比
-	percentageDrop     float64 // 价格跌幅百分比
+	price              float64  // 设置的基准价格
+	percentageIncrease float64  // 价格涨幅百分比
+	percentageDrop     float64  // 价格跌幅百分比
 	currency           string   // 币种
+	percentage         float64  // 加减仓的百分比 (补仓按价格的百分比，减仓按币数的百分比)
+	totalAmount        float64  // 总的金额
+	number             float64  // 币种数量
+	lastPrice          float64  // 最新价格
+	initErr            error    // 初始化错误
 	MarketSvr *service.MarketSvr   // 实例
 }
 
@@ -72,6 +77,22 @@ func (s *Strategy) SetPercentageDrop(percent float64) {
 }
 
 /**
+ * 每次补仓的金额比
+ */
+
+func (s *Strategy) SetPercentage(percentage float64) {
+	s.percentage = percentage
+}
+
+/**
+ * 设置总金额
+ */
+
+func (s*Strategy) SetTotalAmount(totalAmount float64) {
+	s.totalAmount = totalAmount
+}
+
+/**
  * 运行
  */
 
@@ -86,5 +107,4 @@ func (s *Strategy) Run() {
 func (s *Strategy) Do() {
 	fmt.Println("do")
 }
-
 

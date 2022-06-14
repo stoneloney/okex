@@ -2,6 +2,7 @@ package strategy
 
 import (
 	"fmt"
+	"gorm.io/gorm"
 	"math"
 	"okex/helper"
 	"okex/model"
@@ -11,26 +12,61 @@ import (
 
 type StrategyOne struct {
 	Strategy
-
-	totalAmount float64 // 投入的总金额
-	number      float64 // 拥有的币数
-	percentage  float64 // 加减仓的百分比 (补仓按价格的百分比，减仓按币数的百分比)
-	lastPrice   float64 // 最新价格
-
 }
 
 func (s *StrategyOne) Init() *StrategyOne {
-	s.SetCurrency("BTC-USDT")     // 查询BTC
-	s.SetPrice(32338)             // 设置基准价格
-	s.SetPercentageIncrease(0.02) // 设置涨幅百分比
-	s.SetPercentageDrop(0.02)     // 设置跌幅百分比
+	s.SetCurrency("BTC-USDT")     // 设置币种
 
-	s.percentage = 0.1      // 每次补减百分比 (10%)
-	s.totalAmount = 1000000 // 总金额
+	// 查询最近一次的成交价格设置开始的基准价格
+	var data model.StrategyLog
+	result := helper.GetDb().Order("id DESC").First(&data)
+	if result.Error != nil {
+		if result.Error != gorm.ErrRecordNotFound {
+			s.initErr = result.Error
+			fmt.Println("init error, error:", result.Error.Error())
+			return nil
+		}
+
+		// 设置初始化参数
+		s.SetDefaultParams()
+	} else {
+		// 设置最新成交参数
+		s.SetLatestParams(data)
+	}
 
 	return s
 }
-func (s *StrategyOne) Run() {
+
+/**
+ * 首次运行默认数据
+ */
+
+func (s *StrategyOne) SetDefaultParams() {
+	s.SetPrice(32338)             // 设置基准价格
+	s.SetPercentageIncrease(0.02) // 设置涨幅百分比
+	s.SetPercentageDrop(0.02)     // 设置跌幅百分比
+	s.SetPercentage(0.1)          // 设置补仓总的金额比
+	s.SetTotalAmount(1000000)     // 设置总金额
+}
+
+/**
+ * 最新运行数据
+ */
+
+func (s *StrategyOne) SetLatestParams(data model.StrategyLog) {
+	s.SetPrice(data.FinalPrice)             // 设置基准价格
+	s.SetPercentageIncrease(0.02) // 设置涨幅百分比
+	s.SetPercentageDrop(0.02)     // 设置跌幅百分比
+	s.SetPercentage(0.1)          // 设置补仓总的金额比
+	s.SetTotalAmount(1000000)     // 设置总金额
+}
+
+func (s *StrategyOne) Run() error {
+	// 查看是否有初始化错误
+	if s.initErr != nil {
+		return s.initErr
+	}
+
 	// 创建定时器
 	ticker := time.NewTicker(time.Second * 20)
 	go func() {
@@ -39,6 +75,8 @@ func (s *StrategyOne) Run() {
 			s.Do()
 		}
 	}()
+
+	return nil
 }
 
 func (s *StrategyOne) Do() {
@@ -101,7 +139,6 @@ func (s *StrategyOne) Do() {
 				fmt.Println("create log,error:", err.Error())
 			}
 
-
 		} else if contrastPercentage < 0 && contrastPercentage <= -s.percentageDrop { // 价格减少,触发补仓策略
 			fmt.Println(fmt.Sprintf("补仓, contrastPercentage:%v, percentageIncrease:%v, currentPrice:%v, setPrice:%v",
 				contrastPercentage,
@@ -158,13 +195,13 @@ func (s *StrategyOne) Do() {
 // 记录每次的价格等信息
 func (s *StrategyOne) createLog(finalType int) error {
 	createData := &model.StrategyLog{
-		Name: "strategy_one",      // 策略名称
-		Number: s.number,          // 当前币数
-		Amount: s.totalAmount,     // 当前剩余金额
-		SetPrice: s.price,         // 设置价格
-		FinalPrice: s.lastPrice,   // 成交价格
-		FinalType: finalType,      // 成交方式 1:加仓 2:减仓
-		FinalDate: helper.TimeNowStr(), // 成交时间
+		Name:       "strategy_one",      // 策略名称
+		Number:     s.number,            // 当前币数
+		Amount:     s.totalAmount,       // 当前剩余金额
+		SetPrice:   s.price,             // 设置价格
+		FinalPrice: s.lastPrice,         // 成交价格
+		FinalType:  finalType,           // 成交方式 1:加仓 2:减仓
+		FinalDate:  helper.TimeNowStr(), // 成交时间
 	}
 
 	result := helper.GetDb().Create(createData)
