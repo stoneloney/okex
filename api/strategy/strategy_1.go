@@ -189,7 +189,7 @@ func (s *StrategyOne) Do() {
 			// 总币数添加
 			s.number += buyNumber
 			// 总金额减少
-			s.totalAmount -= buyAmount
+			s.totalAmount -= buyNumber * lastPriceFloat
 
 			fmt.Println(fmt.Sprintf("补仓后, number:%v, amount:%v",
 				s.number,
