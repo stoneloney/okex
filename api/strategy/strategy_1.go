@@ -146,6 +146,9 @@ func (s *StrategyOne) Do() {
 			// 总金额添加
 			s.totalAmount += sellAmount
 
+			// 交易成功，重新设置基准价格
+			s.SetPrice(s.lastPrice)
+
 			fmt.Println(fmt.Sprintf("减仓后, number:%v, amount:%v",
 				s.number,
 				helper.Float64ToString(s.totalAmount)))
@@ -187,6 +190,9 @@ func (s *StrategyOne) Do() {
 			s.number += buyNumber
 			// 总金额减少
 			s.totalAmount -= buyAmount
+
+			// 交易成功，重新设置基准价格
+			s.SetPrice(s.lastPrice)
 
 			fmt.Println(fmt.Sprintf("补仓后, number:%v, amount:%v",
 				s.number,
