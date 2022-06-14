@@ -15,7 +15,7 @@ type StrategyOne struct {
 }
 
 func (s *StrategyOne) Init() *StrategyOne {
-	s.SetCurrency("BTC-USDT")     // 设置币种
+	s.SetCurrency("BTC-USDT") // 设置币种
 
 	// 查询最近一次的成交价格设置开始的基准价格
 	var data model.StrategyLog
@@ -54,11 +54,11 @@ func (s *StrategyOne) SetDefaultParams() {
  */
 
 func (s *StrategyOne) SetLatestParams(data model.StrategyLog) {
-	s.SetPrice(data.FinalPrice)             // 设置基准价格
-	s.SetPercentageIncrease(0.02) // 设置涨幅百分比
-	s.SetPercentageDrop(0.02)     // 设置跌幅百分比
-	s.SetPercentage(0.1)          // 设置补仓总的金额比
-	s.SetTotalAmount(1000000)     // 设置总金额
+	s.SetPrice(data.FinalPrice)                      // 设置基准价格
+	s.SetPercentageIncrease(data.PercentageIncrease) // 设置涨幅百分比
+	s.SetPercentageDrop(data.PercentageDrop)         // 设置跌幅百分比
+	s.SetPercentage(data.Percentage)                 // 设置补仓总的金额比
+	s.SetTotalAmount(data.Amount)                    // 设置总金额
 }
 
 func (s *StrategyOne) Run() error {
