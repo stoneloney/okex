@@ -14,6 +14,10 @@ type StrategyOne struct {
 	Strategy
 }
 
+/**
+ * 初始化
+ */
+
 func (s *StrategyOne) Init() *StrategyOne {
 	s.SetCurrency("BTC-USDT") // 设置币种
 
@@ -60,6 +64,9 @@ func (s *StrategyOne) SetLatestParams(data model.StrategyLog) {
 	s.SetPercentage(data.Percentage)                 // 设置补仓总的金额比
 	s.SetTotalAmount(data.Amount)                    // 设置总金额
 }
+/**
+ * 运行
+ */
 
 func (s *StrategyOne) Run() error {
 	// 查看是否有初始化错误
@@ -78,6 +85,10 @@ func (s *StrategyOne) Run() error {
 
 	return nil
 }
+
+/**
+ * 操作
+ */
 
 func (s *StrategyOne) Do() {
 	res, err := s.GetTickerInfo()
