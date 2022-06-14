@@ -146,9 +146,6 @@ func (s *StrategyOne) Do() {
 			// 总金额添加
 			s.totalAmount += sellAmount
 
-			// 交易成功，重新设置基准价格
-			s.SetPrice(s.lastPrice)
-
 			fmt.Println(fmt.Sprintf("减仓后, number:%v, amount:%v",
 				s.number,
 				helper.Float64ToString(s.totalAmount)))
@@ -158,6 +155,9 @@ func (s *StrategyOne) Do() {
 			if err != nil {
 				fmt.Println("create log,error:", err.Error())
 			}
+
+			// 交易成功，重新设置基准价格
+			s.SetPrice(s.lastPrice)
 
 		} else if contrastPercentage < 0 && contrastPercentage <= -s.percentageDrop { // 价格减少,触发补仓策略
 			fmt.Println(fmt.Sprintf("补仓, contrastPercentage:%v, percentageIncrease:%v, currentPrice:%v, setPrice:%v",
@@ -191,9 +191,6 @@ func (s *StrategyOne) Do() {
 			// 总金额减少
 			s.totalAmount -= buyAmount
 
-			// 交易成功，重新设置基准价格
-			s.SetPrice(s.lastPrice)
-
 			fmt.Println(fmt.Sprintf("补仓后, number:%v, amount:%v",
 				s.number,
 				helper.Float64ToString(s.totalAmount)))
@@ -203,6 +200,9 @@ func (s *StrategyOne) Do() {
 			if err != nil {
 				fmt.Println("create log,error:", err.Error())
 			}
+
+			// 交易成功，重新设置基准价格
+			s.SetPrice(s.lastPrice)
 
 		} else { // 保持监控状态
 			fmt.Println(fmt.Sprintf("监控, contrastPercentage:%v, currentPrice:%v, setPrice:%v, number:%v, amount:%v",
