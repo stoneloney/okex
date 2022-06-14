@@ -48,7 +48,7 @@ func (s *StrategyOne) Init() *StrategyOne {
 func (s *StrategyOne) SetDefaultParams() {
 	fmt.Println("start set default")
 
-	s.SetPrice(21403)             // 设置基准价格
+	s.SetPrice(22758)             // 设置基准价格
 	s.SetPercentageIncrease(0.02) // 设置涨幅百分比
 	s.SetPercentageDrop(0.02)     // 设置跌幅百分比
 	s.SetPercentage(0.1)          // 设置补仓总的金额比
